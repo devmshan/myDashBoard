@@ -1,0 +1,169 @@
+.qv-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Editor area */
+.qv-editor-area {
+  margin-bottom: 1.5rem;
+}
+
+.qv-editor-wrapper {
+  display: flex;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.qv-line-numbers {
+  padding: 0.75rem 0;
+  background: #1e1e1e;
+  user-select: none;
+  min-width: 40px;
+  text-align: right;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.qv-line-num {
+  padding: 0 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  height: 1.65em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.qv-line-num.error {
+  background: rgba(239, 83, 80, 0.15);
+  color: var(--red);
+}
+
+.qv-line-num.warning {
+  background: rgba(255, 179, 0, 0.1);
+  color: var(--yellow);
+}
+
+.qv-textarea {
+  flex: 1;
+  padding: 0.75rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  resize: vertical;
+  min-height: 200px;
+  tab-size: 2;
+}
+
+.qv-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Actions */
+.qv-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.qv-btn {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.qv-btn:hover {
+  background: var(--card-hover);
+  color: var(--text-primary);
+}
+
+.qv-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.qv-btn.primary:hover {
+  background: var(--accent-hover);
+}
+
+/* Results */
+.qv-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.qv-result-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.qv-result-item.error {
+  background: rgba(239, 83, 80, 0.08);
+  border: 1px solid rgba(239, 83, 80, 0.2);
+}
+
+.qv-result-item.warning {
+  background: rgba(255, 179, 0, 0.06);
+  border: 1px solid rgba(255, 179, 0, 0.15);
+}
+
+.qv-result-item.success {
+  background: rgba(76, 175, 80, 0.08);
+  border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.qv-result-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  flex-shrink: 0;
+  letter-spacing: 0.03em;
+}
+
+.qv-result-badge.error {
+  background: rgba(239, 83, 80, 0.2);
+  color: var(--red);
+}
+
+.qv-result-badge.warning {
+  background: rgba(255, 179, 0, 0.15);
+  color: var(--yellow);
+}
+
+.qv-result-badge.success {
+  background: rgba(76, 175, 80, 0.15);
+  color: var(--green);
+}
+
+.qv-result-line {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  flex-shrink: 0;
+}
