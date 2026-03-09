@@ -1,0 +1,185 @@
+.qf-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+/* Style selector */
+.qf-style-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.qf-style-btn {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.qf-style-btn:hover {
+  background: var(--card-hover);
+}
+
+.qf-style-btn.active {
+  border-color: var(--accent);
+  background: rgba(74, 158, 255, 0.08);
+}
+
+.qf-style-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.qf-style-btn.active .qf-style-label {
+  color: var(--accent);
+}
+
+.qf-style-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Panels */
+.qf-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .qf-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+.qf-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.qf-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.qf-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qf-char-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.qf-copy-btn {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.qf-copy-btn:hover {
+  background: rgba(74, 158, 255, 0.1);
+}
+
+.qf-textarea {
+  flex: 1;
+  min-height: 300px;
+  padding: 0.75rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  resize: vertical;
+  tab-size: 4;
+}
+
+.qf-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.qf-output {
+  flex: 1;
+  min-height: 300px;
+  padding: 0.75rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 4;
+}
+
+.qf-output:empty::before,
+.qf-output:only-child:not(:empty) {
+  color: var(--text-muted);
+}
+
+/* Actions */
+.qf-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.qf-btn {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.qf-btn:hover {
+  background: var(--card-hover);
+  color: var(--text-primary);
+}
+
+.qf-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.qf-btn.primary:hover {
+  background: var(--accent-hover);
+}
