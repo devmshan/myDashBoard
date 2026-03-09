@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Home from './pages/Home'
 import Todo from './pages/Todo'
 import QueryValidation from './pages/QueryValidation'
@@ -24,7 +24,19 @@ const PAGE_MAP = {
 
 function App() {
   const [activePage, setActivePage] = useState('home')
+  const [now, setNow] = useState(new Date())
   const ActiveComponent = PAGE_MAP[activePage]
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const timeStr = now.toLocaleString('ko-KR', {
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+  })
 
   return (
     <div className="app">
@@ -59,6 +71,9 @@ function App() {
         </nav>
       </aside>
       <main className="main-content">
+        <div className="top-bar">
+          <span className="server-time">{timeStr}</span>
+        </div>
         <ActiveComponent />
       </main>
     </div>

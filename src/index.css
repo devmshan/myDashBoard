@@ -7,29 +7,29 @@
 }
 
 :root {
-  --sidebar-bg: #202020;
-  --sidebar-hover: #2e2e2e;
-  --sidebar-active: #363636;
+  --sidebar-bg: rgba(8, 18, 35, 0.92);
+  --sidebar-hover: rgba(30, 80, 140, 0.25);
+  --sidebar-active: rgba(40, 100, 170, 0.3);
   --sidebar-width: 240px;
-  --main-bg: #191919;
-  --card-bg: #252525;
-  --card-border: #333;
-  --card-hover: #2c2c2c;
-  --text-primary: #e0e0e0;
-  --text-secondary: #9b9b9b;
-  --text-muted: #6b6b6b;
+  --main-bg: #0a1929;
+  --card-bg: rgba(15, 35, 60, 0.6);
+  --card-border: rgba(60, 130, 200, 0.15);
+  --card-hover: rgba(20, 50, 85, 0.7);
+  --text-primary: #d6e4f0;
+  --text-secondary: #8babc4;
+  --text-muted: #5a7a94;
   --accent: #4a9eff;
   --accent-hover: #3a8eef;
-  --green: #4caf50;
-  --yellow: #ffb300;
+  --green: #4caf80;
+  --yellow: #f0b840;
   --red: #ef5350;
-  --border: #333;
-  --input-bg: #2a2a2a;
+  --border: rgba(60, 130, 200, 0.15);
+  --input-bg: rgba(15, 35, 60, 0.5);
 }
 
 body {
   font-family: 'Noto Sans KR', ui-sans-serif, -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: var(--main-bg);
+  background: linear-gradient(135deg, #0a1929 0%, #0d2847 50%, #0a1929 100%);
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.5;
@@ -53,6 +53,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #444;
+  background: rgba(74, 158, 255, 0.25);
   border-radius: 3px;
 }
