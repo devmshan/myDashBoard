@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import Todo from './pages/Todo'
 import QueryValidation from './pages/QueryValidation'
 import QueryFormat from './pages/QueryFormat'
+import LunchPicker from './pages/LunchPicker'
 import './App.css'
 
 const NAV_ITEMS = [
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
 const TOOL_ITEMS = [
   { id: 'query-validation', label: '쿼리검증', icon: '🔍' },
   { id: 'query-format', label: '쿼리정렬', icon: '📐' },
+  { id: 'lunch-picker', label: '점메추', icon: '🍽️' },
 ]
 
 const PAGE_MAP = {
@@ -20,6 +22,7 @@ const PAGE_MAP = {
   todo: Todo,
   'query-validation': QueryValidation,
   'query-format': QueryFormat,
+  'lunch-picker': LunchPicker,
 }
 
 function App() {
@@ -42,8 +45,8 @@ function App() {
     <div className="app">
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <span>🌊</span>
-          <span>In to the BLUE</span>
+          <div className="sidebar-logo-icon">🌊</div>
+          <span className="sidebar-logo-text">In to the BLUE</span>
         </div>
         <nav className="sidebar-nav">
           {NAV_ITEMS.map((item) => (
@@ -74,7 +77,11 @@ function App() {
         <div className="top-bar">
           <span className="server-time">{timeStr}</span>
         </div>
-        <ActiveComponent />
+        {activePage === 'home' ? (
+          <Home now={now} onNavigate={setActivePage} />
+        ) : (
+          <ActiveComponent />
+        )}
       </main>
     </div>
   )

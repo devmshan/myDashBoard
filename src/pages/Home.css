@@ -1,50 +1,113 @@
-.home-desc {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+.home {
+  position: relative;
+}
+
+/* Cover banner */
+.home-cover {
+  height: 180px;
+  background: linear-gradient(135deg, #e8dfd5 0%, #c9d6df 50%, #b8c9d9 100%);
+  position: relative;
+}
+
+.home-cover-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--main-bg));
+}
+
+/* Body */
+.home-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2.5rem 3rem;
+  margin-top: -2rem;
+  position: relative;
+}
+
+.home-greeting-area {
+  margin-bottom: 2.5rem;
+}
+
+.home-date {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.home-greeting {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+/* Sections */
+.home-section {
   margin-bottom: 2rem;
 }
 
-.home-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 0.75rem;
+.home-section-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
-.home-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  padding: 1rem;
+/* Shortcuts */
+.home-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.5rem;
+}
+
+.home-shortcut {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  transition: background 0.15s;
-  cursor: default;
+  padding: 0.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: inherit;
+  text-align: left;
+  width: 100%;
+  color: inherit;
 }
 
-.home-card:hover {
+.home-shortcut:hover {
   background: var(--card-hover);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-.home-card-icon {
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
+.home-shortcut-icon {
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--input-bg);
   border-radius: 8px;
+  font-size: 1.15rem;
   flex-shrink: 0;
 }
 
-.home-card h3 {
-  font-size: 0.9rem;
+.home-shortcut-label {
+  font-size: 0.88rem;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
-.home-card p {
-  font-size: 0.78rem;
+.home-shortcut-desc {
+  font-size: 0.75rem;
   color: var(--text-muted);
   margin-top: 0.1rem;
 }
