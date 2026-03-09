@@ -1,34 +1,67 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Home from './pages/Home'
+import Todo from './pages/Todo'
+import QueryValidation from './pages/QueryValidation'
+import QueryFormat from './pages/QueryFormat'
 import './App.css'
 
+const NAV_ITEMS = [
+  { id: 'home', label: '홈', icon: '🏠' },
+  { id: 'todo', label: '할일', icon: '✅' },
+]
+
+const TOOL_ITEMS = [
+  { id: 'query-validation', label: '쿼리검증', icon: '🔍' },
+  { id: 'query-format', label: '쿼리정렬', icon: '📐' },
+]
+
+const PAGE_MAP = {
+  home: Home,
+  todo: Todo,
+  'query-validation': QueryValidation,
+  'query-format': QueryFormat,
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [activePage, setActivePage] = useState('home')
+  const ActiveComponent = PAGE_MAP[activePage]
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app">
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <span>🌊</span>
+          <span>In to the BLUE</span>
+        </div>
+        <nav className="sidebar-nav">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              className={`nav-item ${activePage === item.id ? 'active' : ''}`}
+              onClick={() => setActivePage(item.id)}
+            >
+              <span className="nav-icon">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+
+          <div className="sidebar-section-label">도구</div>
+          {TOOL_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              className={`nav-item ${activePage === item.id ? 'active' : ''}`}
+              onClick={() => setActivePage(item.id)}
+            >
+              <span className="nav-icon">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      </aside>
+      <main className="main-content">
+        <ActiveComponent />
+      </main>
+    </div>
   )
 }
 

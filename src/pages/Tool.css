@@ -1,0 +1,23 @@
+.tool-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: var(--text-muted);
+  gap: 0.5rem;
+}
+
+.tool-placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.tool-placeholder p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.tool-placeholder span {
+  font-size: 0.82rem;
+}

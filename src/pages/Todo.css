@@ -1,0 +1,247 @@
+/* Input */
+.todo-input-area {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.todo-input-collapsed {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  cursor: text;
+  transition: box-shadow 0.15s;
+}
+
+.todo-input-collapsed:hover {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.todo-input-expanded {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.todo-input-title {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+}
+
+.todo-input-content {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-family: inherit;
+  resize: none;
+  line-height: 1.6;
+}
+
+.todo-input-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.todo-btn-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.todo-btn-close:hover {
+  background: var(--sidebar-hover);
+  color: var(--text-primary);
+}
+
+/* Section label */
+.todo-section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 1.5rem 0 0.75rem;
+}
+
+/* Grid */
+.todo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+/* Note card */
+.note-card {
+  position: relative;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.note-card.done {
+  opacity: 0.6;
+}
+
+.note-card h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  padding-right: 1.5rem;
+}
+
+.note-card p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  flex: 1;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.line-through {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Pin */
+.note-action.pin {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+  padding: 2px;
+}
+
+.note-card:hover .note-action.pin,
+.note-action.pin.active {
+  opacity: 1;
+}
+
+.note-action.pin:not(.active) {
+  filter: grayscale(1);
+}
+
+/* Bottom actions */
+.note-actions {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.note-card:hover .note-actions {
+  opacity: 1;
+}
+
+.note-action-btn {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+  transition: background 0.1s;
+}
+
+.note-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Color picker */
+.note-colors {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.color-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.color-dot:hover {
+  transform: scale(1.15);
+}
+
+.color-dot.selected {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Empty */
+.todo-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 3rem;
+}
+
+/* Modal */
+.todo-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.todo-modal {
+  width: 90%;
+  max-width: 500px;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.todo-modal .todo-input-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.todo-modal .todo-input-content {
+  font-size: 0.9rem;
+}
