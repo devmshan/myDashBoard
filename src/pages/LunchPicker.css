@@ -4,50 +4,219 @@
   margin-bottom: 2rem;
 }
 
-.lp-wheel-area {
+/* ===== 머신 전체 ===== */
+.lp-machine {
+  width: 100%;
+  margin: 0 auto 2rem;
+}
+
+/* 상단 장식 */
+.lp-machine-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(180deg, #d4a853, #c4943f);
+  padding: 0.6rem 1rem;
+  border-radius: 16px 16px 0 0;
+  border: 2px solid #b8862d;
+  border-bottom: none;
+}
+
+.lp-machine-label {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  letter-spacing: 0.15em;
+}
+
+.lp-machine-light {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f44;
+  box-shadow: 0 0 4px #f44;
+  transition: background 0.3s;
+}
+
+.lp-machine-light[data-spinning="true"] {
+  animation: lightBlink 0.4s infinite alternate;
+}
+
+.lp-light-1 { animation-delay: 0s; }
+.lp-light-2 { animation-delay: 0.2s; }
+
+@keyframes lightBlink {
+  from { background: #f44; box-shadow: 0 0 6px #f44; }
+  to { background: #ff0; box-shadow: 0 0 10px #ff0; }
+}
+
+/* 머신 바디 */
+.lp-machine-body {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #e8e0d0, #d8d0c0);
+  border: 2px solid #b8862d;
+  border-top: none;
+  border-bottom: none;
+  padding: 1.5rem 2rem;
+  gap: 1.5rem;
+}
+
+/* ===== 릴 프레임 ===== */
+.lp-reel-frame {
+  flex: 1;
+  height: calc(72px * 3);
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  border-radius: 8px;
+  border: 3px solid #8b7355;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.lp-reel-highlight {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 72px;
+  transform: translateY(-50%);
+  border-top: 2.5px solid #d4a853;
+  border-bottom: 2.5px solid #d4a853;
+  background: rgba(212, 168, 83, 0.08);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.lp-reel-shadow-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.lp-reel-shadow-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.lp-reel-strip {
+  will-change: transform;
+}
+
+.lp-reel-item {
+  height: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  position: relative;
+  justify-content: center;
+  gap: 2px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: background 0.2s;
 }
 
-.lp-arrow {
-  font-size: 1.5rem;
-  color: var(--red);
-  z-index: 2;
-  margin-bottom: -0.75rem;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+.lp-reel-item-selected {
+  background: rgba(212, 168, 83, 0.15) !important;
 }
 
-.lp-wheel-wrapper {
-  width: 300px;
-  height: 300px;
+.lp-reel-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #37352f;
 }
 
-.lp-wheel {
-  width: 100%;
-  height: 100%;
+.lp-reel-place {
+  font-size: 0.85rem;
+  color: #787774;
+  font-weight: 500;
+}
+
+/* ===== 레버 ===== */
+.lp-lever-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-lever {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lp-lever:disabled {
+  cursor: not-allowed;
+}
+
+.lp-lever-pulled {
+  transform: translateY(20px);
+}
+
+.lp-lever-stick {
+  width: 10px;
+  height: 100px;
+  background: linear-gradient(90deg, #aaa, #ddd, #aaa);
+  border-radius: 4px;
+  border: 1px solid #999;
+}
+
+.lp-lever-knob {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  background: radial-gradient(circle at 40% 35%, #ff6b6b, #cc3333);
+  border: 2px solid #aa2222;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  margin-top: -2px;
+}
+
+.lp-lever:hover:not(:disabled) .lp-lever-knob {
+  background: radial-gradient(circle at 40% 35%, #ff8888, #dd4444);
+}
+
+/* 하단 버튼 */
+.lp-machine-bottom {
+  background: linear-gradient(180deg, #d8d0c0, #c8c0b0);
+  border: 2px solid #b8862d;
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 1rem;
+  text-align: center;
 }
 
 .lp-spin-btn {
   padding: 0.65rem 2rem;
-  background: var(--accent);
+  background: linear-gradient(180deg, #d4a853, #b8862d);
   color: #fff;
-  border: none;
+  border: 1px solid #a07020;
   border-radius: 8px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.15s;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .lp-spin-btn:hover:not(:disabled) {
-  background: var(--accent-hover);
+  background: linear-gradient(180deg, #e0b860, #c4943f);
 }
 
 .lp-spin-btn:disabled {
@@ -55,7 +224,7 @@
   cursor: not-allowed;
 }
 
-/* Result */
+/* ===== 결과 ===== */
 .lp-result {
   display: flex;
   justify-content: center;

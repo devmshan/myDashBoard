@@ -1,118 +1,172 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import './LunchPicker.css'
 
 const MENUS = [
-  { name: '돈까스', place: '경양식당', color: '#e8d5b7' },
-  { name: '짜장면', place: '홍콩반점', color: '#d4bfaa' },
-  { name: '김치찌개', place: '김씨네밥상', color: '#f0c8c8' },
-  { name: '쌀국수', place: '포베이', color: '#c8e0c8' },
-  { name: '치킨', place: 'BBQ', color: '#f5deb3' },
-  { name: '떡볶이', place: '신전떡볶이', color: '#f4c2c2' },
-  { name: '초밥', place: '스시웨이', color: '#c8d8e8' },
-  { name: '감자탕', place: '왕감자탕', color: '#e0d0c0' },
-  { name: '햄버거', place: '맥도날드', color: '#f5e6c8' },
-  { name: '칼국수', place: '손칼국수', color: '#d8e8d8' },
-  { name: '제육볶음', place: '한솥도시락', color: '#ecc8b0' },
-  { name: '부대찌개', place: '놀부부대찌개', color: '#e0c8c0' },
+  { name: '돈까스', place: '경양식당', color: '#f6e4c4' },
+  { name: '짜장면', place: '홍콩반점', color: '#d4c1a8' },
+  { name: '김치찌개', place: '킹과식당', color: '#f7b7b7' },
+  { name: '쌀국수', place: '포베이', color: '#b8e6ce' },
+  { name: '치킨', place: '지코바', color: '#ffe0a0' },
+  { name: '떡볶이', place: '동떡이', color: '#ffadad' },
+  { name: '파스타', place: '스파게티스토리', color: '#a8d4f0' },
+  { name: '뼈해장국', place: '감성뼈다귀', color: '#e8cdb5' },
+  { name: '햄버거', place: '맥도날드', color: '#ffe5a0' },
+  { name: '중국집', place: '츠바오', color: '#f0c8a0' },
+  { name: '칼국수', place: '이모네손칼국수', color: '#c2e8c2' },
+  { name: '제육볶음', place: '한솥도시락', color: '#f5c4a1' },
+  { name: '부대찌개', place: '할머니부대찌개', color: '#f2b5b5' },
+  { name: '쌀국수', place: '미스사이공', color: '#a8e8d8' },
+  { name: '돈까스', place: '한조', color: '#e8d8b8' },
+  { name: '햄버거', place: '온더덱', color: '#ffd480' },
+  { name: '중국집', place: '마차이짬뽕', color: '#dbb8e8' },
+  { name: '된장찌개', place: '박군한우', color: '#c8d8a0' },
+  { name: '순대국', place: '평창순대국', color: '#e0c0d8' },
+  { name: '칼국수', place: '최가네칼국수', color: '#b0d8e8' },
+  { name: '족발', place: '우만동족발', color: '#e8c8d0' },
 ]
 
-const TOTAL = MENUS.length
-const ARC = 360 / TOTAL
+const ITEM_HEIGHT = 72
+const VISIBLE_ITEMS = 3
+
+function shuffleArray(arr) {
+  const shuffled = [...arr]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
+function buildReel() {
+  const items = []
+  for (let i = 0; i < 8; i++) {
+    items.push(...shuffleArray(MENUS))
+  }
+  return items
+}
 
 export default function LunchPicker() {
-  const [rotation, setRotation] = useState(0)
   const [spinning, setSpinning] = useState(false)
   const [result, setResult] = useState(null)
-  const wheelRef = useRef(null)
+  const [resultIdx, setResultIdx] = useState(-1)
+  const [leverPulled, setLeverPulled] = useState(false)
+  const reelRef = useRef(null)
+  const animRef = useRef(null)
+  const offsetRef = useRef(0)
+  const speedRef = useRef(0)
+  const reelItemsRef = useRef(buildReel())
+  const [reelItems, setReelItems] = useState(reelItemsRef.current)
+  const [displayOffset, setDisplayOffset] = useState(0)
+
+  const animate = useCallback(() => {
+    const speed = speedRef.current
+
+    if (speed < 0.5) {
+      // 자연 감속 후 현재 위치에서 가장 가까운 아이템에 스냅
+      const nearestIdx = Math.round(offsetRef.current / ITEM_HEIGHT)
+      const clampedIdx = Math.max(0, Math.min(nearestIdx, reelItemsRef.current.length - 1))
+      const snapOffset = clampedIdx * ITEM_HEIGHT
+      offsetRef.current = snapOffset
+      setDisplayOffset(snapOffset)
+      setSpinning(false)
+      setLeverPulled(false)
+      setResultIdx(clampedIdx)
+      setResult(reelItemsRef.current[clampedIdx])
+      return
+    }
+
+    offsetRef.current += speed
+    speedRef.current *= 0.988
+
+    setDisplayOffset(offsetRef.current)
+    animRef.current = requestAnimationFrame(animate)
+  }, [])
 
   const spin = () => {
     if (spinning) return
     setSpinning(true)
     setResult(null)
+    setResultIdx(-1)
+    setLeverPulled(true)
 
-    const extraSpins = 360 * (5 + Math.floor(Math.random() * 3))
-    const randomAngle = Math.random() * 360
-    const newRotation = rotation + extraSpins + randomAngle
+    // 새 릴 생성 - ref와 state 동시에 업데이트
+    const items = buildReel()
+    reelItemsRef.current = items
+    setReelItems(items)
 
-    setRotation(newRotation)
+    // 시작 위치와 속도 설정 (충분히 스크롤되도록)
+    offsetRef.current = 0
+    speedRef.current = 30 + Math.random() * 15
 
-    setTimeout(() => {
-      const finalAngle = newRotation % 360
-      // 화살표가 위(0도)에 있으므로, 해당 각도에 맞는 메뉴 계산
-      const idx = Math.floor(((360 - finalAngle + ARC / 2) % 360) / ARC) % TOTAL
-      setResult(MENUS[idx])
-      setSpinning(false)
-    }, 4000)
+    if (animRef.current) cancelAnimationFrame(animRef.current)
+    animRef.current = requestAnimationFrame(animate)
   }
 
-  const reset = () => {
-    setResult(null)
-  }
+  useEffect(() => {
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current)
+    }
+  }, [])
 
   return (
     <div className="page-container">
       <h1 className="page-title">점메추</h1>
-      <p className="lp-desc">룰렛을 돌려서 오늘의 점심 메뉴를 정해보세요!</p>
+      <p className="lp-desc">레버를 당겨서 오늘의 점심 메뉴를 정해보세요!</p>
 
-      <div className="lp-wheel-area">
-        <div className="lp-arrow">▼</div>
-        <div className="lp-wheel-wrapper">
-          <svg
-            ref={wheelRef}
-            className="lp-wheel"
-            viewBox="0 0 300 300"
-            style={{
-              transform: `rotate(${rotation}deg)`,
-              transition: spinning ? 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)' : 'none',
-            }}
-          >
-            {MENUS.map((item, i) => {
-              const startAngle = i * ARC
-              const endAngle = startAngle + ARC
-              const startRad = (Math.PI / 180) * (startAngle - 90)
-              const endRad = (Math.PI / 180) * (endAngle - 90)
-              const x1 = 150 + 140 * Math.cos(startRad)
-              const y1 = 150 + 140 * Math.sin(startRad)
-              const x2 = 150 + 140 * Math.cos(endRad)
-              const y2 = 150 + 140 * Math.sin(endRad)
-              const largeArc = ARC > 180 ? 1 : 0
-
-              const midRad = (Math.PI / 180) * (startAngle + ARC / 2 - 90)
-              const textX = 150 + 90 * Math.cos(midRad)
-              const textY = 150 + 90 * Math.sin(midRad)
-              const textRotate = startAngle + ARC / 2
-
-              return (
-                <g key={i}>
-                  <path
-                    d={`M150,150 L${x1},${y1} A140,140 0 ${largeArc},1 ${x2},${y2} Z`}
-                    fill={item.color}
-                    stroke="#fff"
-                    strokeWidth="1.5"
-                  />
-                  <text
-                    x={textX}
-                    y={textY}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    transform={`rotate(${textRotate}, ${textX}, ${textY})`}
-                    fill="#37352f"
-                    fontSize="11"
-                    fontWeight="600"
-                    fontFamily="'Noto Sans KR', sans-serif"
-                  >
-                    {item.name}
-                  </text>
-                </g>
-              )
-            })}
-            <circle cx="150" cy="150" r="22" fill="#fff" stroke="#e8e7e4" strokeWidth="2" />
-          </svg>
+      <div className="lp-machine">
+        {/* 머신 상단 장식 */}
+        <div className="lp-machine-top">
+          <span className="lp-machine-light lp-light-1" data-spinning={spinning} />
+          <span className="lp-machine-label">LUNCH PICKER</span>
+          <span className="lp-machine-light lp-light-2" data-spinning={spinning} />
         </div>
 
-        <button className="lp-spin-btn" onClick={spin} disabled={spinning}>
-          {spinning ? '돌리는 중...' : '돌리기!'}
-        </button>
+        <div className="lp-machine-body">
+          {/* 릴 디스플레이 */}
+          <div className="lp-reel-frame">
+            <div className="lp-reel-highlight" />
+            <div className="lp-reel-shadow-top" />
+            <div className="lp-reel-shadow-bottom" />
+            <div
+              ref={reelRef}
+              className="lp-reel-strip"
+              style={{
+                transform: `translateY(${-displayOffset + ITEM_HEIGHT}px)`,
+              }}
+            >
+              {reelItems.map((item, i) => (
+                <div
+                  key={i}
+                  className={`lp-reel-item ${!spinning && result && i === resultIdx ? 'lp-reel-item-selected' : ''}`}
+                  style={{ height: ITEM_HEIGHT, background: item.color }}
+                >
+                  <span className="lp-reel-name">{item.name}</span>
+                  <span className="lp-reel-place">{item.place}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 레버 */}
+          <div className="lp-lever-area">
+            <button
+              className={`lp-lever ${leverPulled ? 'lp-lever-pulled' : ''}`}
+              onClick={spin}
+              disabled={spinning}
+              aria-label="레버 당기기"
+            >
+              <div className="lp-lever-stick" />
+              <div className="lp-lever-knob" />
+            </button>
+          </div>
+        </div>
+
+        {/* 버튼 */}
+        <div className="lp-machine-bottom">
+          <button className="lp-spin-btn" onClick={spin} disabled={spinning}>
+            {spinning ? '돌리는 중...' : '🎰 레버 당기기!'}
+          </button>
+        </div>
       </div>
 
       {result && (
